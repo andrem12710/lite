@@ -1,0 +1,94 @@
+workspace {
+
+    model {
+        // Definimos los usuarios
+        admin = person "Administrador" {
+            description "Gestiona usuarios, configuraciones y monitorea todas las ejecuciones."
+        }
+        soporte = person "Ingeniero de Soporte" {
+            description "Revisa y gestiona errores reportados en las ejecuciones fallidas."
+        }
+
+        // Definimos el sistema principal
+        sistema = softwareSystem "Aplicación de Gestión de Errores" {
+            description "Aplicación Web para la gestión de errores de Step Functions."
+
+            frontend = container "Frontend" {
+                description "Interfaz web (React/Angular/Vue.js)"
+                technology "JavaScript, HTML, CSS"
+
+                component "Componente de Autenticación" {
+                    description "Gestión de inicio de sesión y autenticación."
+                    technology "React/Angular/Vue.js"
+                }
+
+                component "Componente de Visualización de Errores" {
+                    description "Muestra los errores y permite su gestión."
+                    technology "React/Angular/Vue.js"
+                }
+
+                component "Componente de Configuración" {
+                    description "Interfaz para la configuración del sistema."
+                    technology "React/Angular/Vue.js"
+                }
+            }
+
+            backend = container "Backend" {
+                description "API backend que gestiona la interacción con AWS Step Functions y Core Bancario"
+                technology "Node.js/Python (Flask/Django)"
+
+                AwsController = component "Lambdas - Apis - Bases de Datos de Parametros Relacionales - DynamoDb para guardar los logs de procesos" {
+                    description "Gestión de las ejecuciones de Step Functions"
+                    technology "AWS SDK"
+                }
+            }
+
+            stepFunctions = container "Step Functions AWS" {
+                description "Orquestador de flujos de trabajo en AWS"
+                technology "AWS Step Functions"
+            }
+        }
+
+        // Definimos el sistema externo
+        coreBancario = softwareSystem "Core Bancario SaaS" {
+            description "SaaS Core Bancario que provee APIs para realizar consultas."
+        }
+
+        // Definimos las relaciones
+        admin -> frontend "Accede y configura el sistema"
+        admin -> stepFunctions "Configura los Steps y las diferentes Orquestaciones"
+        soporte -> frontend "Monitorea errores y reintenta procesos fallidos"
+       
+        frontend -> backend "Consulta ejecuciones y detalles de errores"
+        backend -> stepFunctions "Gestiona ejecuciones de Step Functions"
+        stepFunctions -> coreBancario "Consulta APIs del Core Bancario"
+    }
+
+    views {
+        // Vista del sistema de contexto
+        systemContext sistema {
+            include *
+            autolayout lr
+        }
+
+        // Vista del contenedor
+        container sistema {
+            include *
+            autolayout lr
+        }
+
+        // Vista del diagrama de componentes para el contenedor Backend
+        component backend {
+            include *
+            autolayout lr
+        }
+
+        // Vista del diagrama de componentes para el contenedor Frontend
+        component frontend {
+            include *
+            autolayout lr
+        }
+
+        theme default
+    }
+}
