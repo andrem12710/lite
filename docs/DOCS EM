@@ -1,0 +1,84 @@
+# Arquitectura de Software para Gestión de Eventos de Error en el Procesamiento de Datos Masivos
+
+## Formulación y Descripción del problema
+
+Actualmente sobre una entidad financiera se ejecutan procesos contables en las horas de la madrugada que generan la información necesaria para realizar el cierre contable mensual, lo cual consume más tiempo del esperado y aumenta el riesgo de cometer errores; durante el transcurso de este proceso es necesario realizar la revisión manual de las fallas presentadas al siguiente día, ya que no se recibe ningún tipo de notificación que alerte sobre los eventos ocurridos.  Dado lo anterior se requiere una solución que realice el envió de notificaciones en tiempo real y permita la gestión y administración de las inconsistencias detectadas.
+
+## Proceso estado actual
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de Mermaid
+
+## Pregunta
+
+¿Cómo podemos diseñar, desarrollar e implementar una solución de software que permita detectar, guardar y gestionar eventos de error en un entorno de procesos masivos de manera eficiente, minimizando el impacto sobre el sistema y brindando una respuesta oportuna en la resolución de incidentes?
+
+## Propuesta de solución
+
+Desarrollar una app web que permita gestionar de manera centralizada eventos de error en procesos masivos, minimizando el impacto en el sistema y facilitando la resolución de incidentes.
+
+Ejemplo de link externo: [link Externo](https://www.structurizr.com/dsl) Diagrama de contexto
+
+
+
+## Arquitectura
+
+Diagrama de contenedores
+
+Dentro del diagrama de contenedores se detalla el interior de la aplicación de gestor de errores, la cual cuenta con:
+
+1. Frontend: Interfaz web con la cual interactuan los usuarios Administrador e Ingeniero de soporte.
+1. Backend: API que gestiona la interacción con AWS Step Funtions y Core Bancario.
+1. Step Funtions AWS: Orquestador de flujos de trabajo en AWS
+
+Ejemplo de link externo: [link Externo](https://www.structurizr.com/dsl) Diagrama de contenedores
+
+Diagramas de componentes
+
+Diagrama de componentes Frontend
+
+Dentro del diagrama de contenedores del Frontend se muestra la interacción entre lambdas, Apis y Base de datos relacional por medio de los cuales se gestiona la ejecución de los Step Functions.
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de componentes Frontend
+
+
+Diagrama de componentes Backend
+
+El diagrama de contenedores del Backend cuenta con 3 componentes:
+
+1. Componente de autenticación: Gestión de inicio de sesión y autenticación.
+1. Componente de visualización de errores: Muestra los errores y permite su gestión.
+1. componente de configuración: Interfaz para la configuración del sistema.
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de componentes Backend
+
+
+Diagramas de Despliegue
+
+Texto...
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de despliegue
+
+
+Diagrama de secuencia
+
+El ingeniero de soporte monitorea el sistema a través de un gestor de eventos el cual envía notificaciones a través de AWS, como respuesta el ingeniero de soporte recibe notificaciones y las gestiona en tiempo real para corregir el error presentado, se ejecuta una parametrización a nivel interno la cual brinda una solución y cierra el ciclo permitiendo que el proceso continúe para finalizarse exitosamente.
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de secuencia
+
+
+Diagrama de Clases
+
+A continuación, se presenta un diagrama de secuencia diseñado para el app web  Events Manager el cual se describe de la siguiente manera:
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama de clases
+
+
+Diagrama Arquitectura basada en colas
+
+Esta arquitectura aprovecha los servicios de AWS para lograr alta disponibilidad, escalabilidad y seguridad. Los componentes pueden comunicarse entre sí a través de API Gateway, que actúa como una capa de gestión de API para las interacciones entre los diferentes servicios.
+
+Ejemplo de link externo: [link Externo](https://docs.structurizr.com/lite) Diagrama arquitectura basada en colas
+
+
+
+
